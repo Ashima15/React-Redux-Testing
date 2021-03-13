@@ -25,12 +25,12 @@ describe('Button Component', () => {
 
     describe('Renders', ()=> {
         let wrapper;
+        let mockFunc;
         beforeEach(() => {
+            mockFunc = jest.fn();
             const props = {
                 buttonText: 'Test Button Text',
-                emitEvent: () => {
-
-                }
+                emitEvent: mockFunc
             }
             wrapper = setUp(props);
         })
@@ -38,6 +38,13 @@ describe('Button Component', () => {
         it('should render a button', () => {
             let button = findByTestAtrr(wrapper, 'buttonComponent');
             expect(button.length).toBe(1);
+        })
+
+        it('should render a button', () => {
+            let button = findByTestAtrr(wrapper, 'buttonComponent');
+            button.simulate('click');
+            const callback = mockFunc.mock.calls.length;
+            expect(callback).toBe(1);
         })
     })
     
